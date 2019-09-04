@@ -32,10 +32,10 @@
                 align-items: center;
             }
             .effect-container{
-                background: #000;
+                background: #111;
                 width: 320px;
                 height: 120px;
-                color: #fff;
+                color: #eee;
                 display: flex;
                 align-items: center;
                 padding-left: 30px;
@@ -59,6 +59,15 @@
                 font-size: 1.5rem;
                 margin-top: 30px;
             }
+            footer{
+                height: 50px;
+                width: 100%;
+                background: #111;
+                color: #eee;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         </style>
 
     </head>
@@ -74,8 +83,14 @@
                 </div>
             </div>
         </header>
+        <section name="aboutme">
+            
+        </section>
         <main class='container'>
             @yield('content')
         </main>
+        <footer>
+            <span>Designed and implemented by <a href="http://trufan.ro/">trufan.ro</a> | Trufan Andreea.</span>
+        </footer>
     </body>
 </html>

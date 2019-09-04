@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Post;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -13,7 +13,12 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+        return view('welcome');
+    }
+
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 
     /**
@@ -23,7 +28,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -34,7 +39,23 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'cover' => ['image', 'required'],
+        ]);
+
+        $image = request('cover')->store('/uploads/'.auth()->user()->name, 'public');
+         
+        $post = new Post;
+        $post->create([
+            'user_id' => auth()->user()->id,
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'cover' => $image,
+        ]);
+
+        return redirect(route('home'));
     }
 
     /**
@@ -45,7 +66,8 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -56,7 +78,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -68,7 +91,25 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+
+        $data = request()->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'cover' => '',
+        ]);
+
+        if(request('cover')){
+            $image = request('cover')->store('uploads', 'public');
+            $imageArray = ['cover' => $image];
+        }
+
+        $post->update(array_merge(
+            $data,
+            $imageArray ?? []
+        ));
+
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -79,6 +120,7 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::find($id)->delete($id);
+        return redirect(route('posts.index'));
     }
 }
