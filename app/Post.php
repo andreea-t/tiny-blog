@@ -15,4 +15,16 @@ class Post extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function truncate($string, $length=200,$append="...") {
+        $string = trim($string);
+      
+        if(strlen($string) > $length) {
+          $string = wordwrap($string, $length);
+          $string = explode("\n", $string, 2);
+          $string = $string[0] . $append;
+        }
+      
+        return $string;
+      }
 }

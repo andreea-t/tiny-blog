@@ -11,14 +11,16 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('welcome');
-    }
 
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        $posts = Post::all();
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -55,7 +57,7 @@ class PostsController extends Controller
             'cover' => $image,
         ]);
 
-        return redirect(route('home'));
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -79,6 +81,7 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+        $this->authorize('update', $post);
         return view('posts.edit', compact('post'));
     }
 
@@ -120,7 +123,21 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        Post::find($id)->delete($id);
+        $post = Post::find($id);
+        $post->delete();
         return redirect(route('posts.index'));
+    }
+
+    public function deleted()
+    {
+        $posts = Post::onlyTrashed()->get();
+        return view('posts.deleted', compact('posts'));
+    }
+
+    public function restore($id) 
+    {
+        $post = Post::onlyTrashed()->find($id)->restore();
+        $posts = Post::onlyTrashed()->get();
+        return redirect('/posts/deleted');
     }
 }
