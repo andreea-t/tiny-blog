@@ -41,7 +41,7 @@
                     </div> --}}
     
                     <div class="row mt-3 pt-4">
-                        <button class="btn btn-primary col-md-2" style="margin:auto">Submit</button>
+                        <button class="btn btn-primary col-md-2" style="margin:auto">Submit post</button>
                     </div>
                 </div>
             </div>

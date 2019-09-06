@@ -1,6 +1,11 @@
 @extends('layouts.guest_layout')
 
 @section('content')
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
     <style>
         input[name="searchbox"]{
             width: 100%;
@@ -21,8 +26,8 @@
             margin: 50px 0 100px 0;
         }
         .item{
-            width: 320px;
-            /* height: 420px; */
+            width: calc(100% / 3 - 20px);
+            margin: 10px;
             background: #fff;
             box-shadow: 0px 2px 4px 1px rgba(8,8,8,0.08);
         }
@@ -52,21 +57,40 @@
         .content>p{
             margin: 0px 0 8px 0;
         }
+        @media screen and (max-width: 1024px){
+            .item{
+                width: calc(100% / 2 - 20px);
+            }
+        }
+        @media screen and (max-width: 600px){
+            .item{
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
     </style>
 
-    <input name="searchbox" type="text" placeholder="Search for posts..." />
+    {{-- <form action="/" method="GET">
+        {{ csrf_token() }}
+        <input name="searchbox" type="text" placeholder="Search for posts..." />
+        <button class="btn btn-secondary d-none" type="submit">Search</button>
+    </form> --}}
 
-    <div class="blog-posts">
-
-        <div class="item">
-            <img src="{{ asset('/images/test.jpg') }}">
+    <div class="blog-posts grid" data-masonry='{ "itemSelector": ".grid-item"}'">
+        @forelse($posts as $post)
+        <div class="item grid-item">
+            <img src="/storage/{{$post->cover}}">
             <div class="content">
-                <p>31-08-2019</p>
-                <h4>Post title</h4>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+            <p>{{$post->created_at->diffForHumans()}}</p>
+            <h4>{{$post->title}}</h4>
+            {{$post->truncate($post->content)}}
             </div>
             <div><a href="#">Read more</a></div>
         </div>
+        @empty
+        <p>This blog doesn't have any posts yet.</p>
+        @endforelse
 
     </div>
 @endsection

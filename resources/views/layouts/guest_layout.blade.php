@@ -50,6 +50,11 @@
                 border-right: none;
             }
 
+            .cards-container{
+                max-width: 1200px;
+                margin: auto;
+            }
+
             @keyframes text-bar{
                 100%{
                     border-right: 3px solid #fff;
@@ -67,6 +72,44 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+            }
+            @media screen and (max-width: 1024px){
+                .overlay{
+                    padding: 0 5% 0 5%;
+                }
+            }
+            @media screen and (max-width: 768px){
+                header{
+                    width: 100%;
+                    height: 100vh;
+                }
+                header>img{
+                    width: 100%;
+                    height: 100vh;
+                    object-fit: cover;
+                }
+                .overlay,
+                .overlay>div,
+                .effect-container{
+                    padding: 0;
+                    margin: 0;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                }
+                .effect-container{
+                    font-size: 2rem;
+                    width: 100%;
+                }
+                .effect-container>p{
+                    animation: none;
+                }
+                footer{
+                    font-size: .75rem;
+                }
+                .subtitle{
+                    margin-top: 150px;
+                }
             }
         </style>
 
@@ -86,7 +129,7 @@
         <section name="aboutme">
             
         </section>
-        <main class='container'>
+        <main class='cards-container'>
             @yield('content')
         </main>
         <footer>
