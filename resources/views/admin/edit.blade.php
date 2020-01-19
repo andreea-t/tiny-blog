@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <form action="/posts/{{$post->id}}" enctype="multipart/form-data" method="POST">
+    <form action="/admin/posts/{{$post->id}}" enctype="multipart/form-data" method="POST">
             @method('PATCH')
             <div class="row">
                 <div class="col-8 offset-2">

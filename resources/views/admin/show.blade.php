@@ -8,7 +8,7 @@
             <div class="mx-5">
                 <p><strong>Author:</strong> {{$post->user->name}}</p>
                 <p><strong>Created:</strong> {{$post->created_at->diffForHumans()}} ({{$post->created_at->format('Y-m-d')}})</p>
-                <a href="/posts/{{$post->id}}/edit" class="btn btn-success">Edit post</a>
+                <a href="/admin/posts/{{$post->id}}/edit" class="btn btn-success">Edit post</a>
                 <a href="{{route('posts.destroy', $post->id)}}" onclick="event.preventDefault();document.getElementById('delete-form').submit();" class="btn btn-danger">Delete post</a>
                 <form id="delete-form" action="{{route('posts.destroy', $post->id)}}" method="post" style="display: none;">
                     @method('DELETE')

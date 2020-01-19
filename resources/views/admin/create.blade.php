@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-        <form action="/posts" enctype="multipart/form-data" method="POST">
+        <form action="/admin/posts" enctype="multipart/form-data" method="POST">
             <div class="row">
                 <div class="col-8 offset-2">
                     <div class="row mt-5">

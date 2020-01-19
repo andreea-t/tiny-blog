@@ -86,7 +86,7 @@
             <h4>{{$post->title}}</h4>
             {{$post->truncate($post->content)}}
             </div>
-            <div><a href="#">Read more</a></div>
+            <div><a href="/post-{{$post->id}}">Read more</a></div>
         </div>
         @empty
         <p>This blog doesn't have any posts yet.</p>

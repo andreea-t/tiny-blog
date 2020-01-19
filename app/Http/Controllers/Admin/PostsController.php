@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('posts.index', compact('posts'));
+        return view('admin.index', compact('posts'));
     }
 
     /**
@@ -30,7 +31,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        return view('admin.create');
     }
 
     /**
@@ -57,7 +58,7 @@ class PostsController extends Controller
             'cover' => $image,
         ]);
 
-        return redirect(route('posts.index'));
+        return redirect('/admin/posts');
     }
 
     /**
@@ -69,7 +70,7 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        return view('posts.show', compact('post'));
+        return view('admin.show', compact('post'));
     }
 
     /**
@@ -82,7 +83,7 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
         $this->authorize('update', $post);
-        return view('posts.edit', compact('post'));
+        return view('admin.edit', compact('post'));
     }
 
     /**
@@ -112,7 +113,7 @@ class PostsController extends Controller
             $imageArray ?? []
         ));
 
-        return redirect(route('posts.index'));
+        return redirect(route('admin.index'));
     }
 
     /**
@@ -125,13 +126,13 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
         $post->delete();
-        return redirect(route('posts.index'));
+        return redirect(route('admin.index'));
     }
 
     public function deleted()
     {
         $posts = Post::onlyTrashed()->get();
-        return view('posts.deleted', compact('posts'));
+        return view('admin.deleted', compact('posts'));
     }
 
     public function restore($id) 
