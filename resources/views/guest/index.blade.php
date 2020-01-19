@@ -77,20 +77,36 @@
         <button class="btn btn-secondary d-none" type="submit">Search</button>
     </form> --}}
 
-    <div class="blog-posts grid" data-masonry='{ "itemSelector": ".grid-item"}'">
+    <div class="blog-posts grid" data-masonry='{ "itemSelector": ".grid-item"}'>
+
         @forelse($posts as $post)
+
+        @if($post->visible === 'true')
+
         <div class="item grid-item">
+
             <img src="/storage/{{$post->cover}}">
+            
             <div class="content">
-            <p>{{$post->created_at->diffForHumans()}}</p>
-            <h4>{{$post->title}}</h4>
-            {{$post->truncate($post->content)}}
+                <p>{{$post->created_at->diffForHumans()}}</p>
+                <h4>{{$post->title}}</h4>
+                {{$post->truncate($post->content)}}
             </div>
-            <div><a href="/post-{{$post->id}}">Read more</a></div>
+
+            <div>
+                <a href="/post-{{$post->id}}">Read more</a>
+            </div>
+
         </div>
+
+        @endif
+
         @empty
+
         <p>This blog doesn't have any posts yet.</p>
+
         @endforelse
 
     </div>
+
 @endsection

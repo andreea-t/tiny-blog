@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('cover');
+            $table->string('visible')->default('true');
             $table->timestamps();
             $table->softDeletes();
         });

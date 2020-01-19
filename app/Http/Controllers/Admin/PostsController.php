@@ -46,6 +46,7 @@ class PostsController extends Controller
             'title' => 'required',
             'content' => 'required',
             'cover' => ['image', 'required'],
+            'visible' => 'required'
         ]);
 
         $image = request('cover')->store('/uploads/'.auth()->user()->name, 'public');
@@ -56,6 +57,7 @@ class PostsController extends Controller
             'title' => $data['title'],
             'content' => $data['content'],
             'cover' => $image,
+            'visible' => $data['visible']
         ]);
 
         return redirect('/admin/posts');
@@ -101,6 +103,7 @@ class PostsController extends Controller
             'title' => 'required',
             'content' => 'required',
             'cover' => '',
+            'visible' => 'required'
         ]);
 
         if(request('cover')){
@@ -113,7 +116,7 @@ class PostsController extends Controller
             $imageArray ?? []
         ));
 
-        return redirect(route('admin.index'));
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -126,7 +129,7 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
         $post->delete();
-        return redirect(route('admin.index'));
+        return redirect('/admin/posts');
     }
 
     public function deleted()
