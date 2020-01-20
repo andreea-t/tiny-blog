@@ -7,7 +7,7 @@
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
     <style>
-        input[name="searchbox"]{
+        input[name="search"]{
             width: 100%;
             height: 50px;
             border-radius: 30px;
@@ -19,7 +19,7 @@
             margin: 50px 0 50px 0;
             transition: .5s;
         }
-        input[name="searchbox"]:focus{
+        input[name="search"]:focus{
             border: 1px solid #4CAF50;
         }
         .blog-posts{
@@ -70,11 +70,11 @@
             }
         }
     </style>
-
-    {{-- <form action="/" method="GET">
-        {{ csrf_token() }}
-        <input name="searchbox" type="text" placeholder="Search for posts..." />
-        <button class="btn btn-secondary d-none" type="submit">Search</button>
+{{-- 
+    <form action="/" method="GET">
+        @csrf --}}
+        <input id="search" name="search" type="text" placeholder="Search for posts..." />
+        {{-- <button class="btn btn-secondary d-none" type="submit">Search</button>
     </form> --}}
 
     <div class="blog-posts grid" data-masonry='{ "itemSelector": ".grid-item"}'>
@@ -108,5 +108,36 @@
         @endforelse
 
     </div>
+
+    <script type="text/javascript">
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    
+        $('#search').on('keyup',function(){
+
+            let value = $(this).val();
+            
+            console.log(value);
+
+            $.ajax({
+                type : 'GET',
+                url : '/search',
+                data: {'search': value},
+                success: function(data)
+                {
+                    $.each(data, function(index) {
+                        $('.item').html('da');
+                        $('.item').html(JSON.stringify(data[index]));
+                    });
+                }
+
+            });
+        })
+
+    </script>        
 
 @endsection
