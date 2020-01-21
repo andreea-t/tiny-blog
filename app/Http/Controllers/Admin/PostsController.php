@@ -144,23 +144,4 @@ class PostsController extends Controller
         $posts = Post::onlyTrashed()->get();
         return redirect('/posts/deleted');
     }
-
-    public function search(Request $request)
-    {
-        $posts = Post::where('visible', 'LIKE', 'true')
-                    ->where(function ($query) use ($request) {
-                            $query->where('title', 'LIKE', '%'.$request->search."%")
-                                    ->orWhere('content', 'LIKE', '%'.$request->search."%");
-                    })
-                    ->get();
-
-        if($posts->isEmpty())
-        {
-            return 'No posts with your search term have been found. Try again.';
-        }
-        else 
-        {
-            return $posts;
-        }
-    }
 }

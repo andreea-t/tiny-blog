@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::get('/search','Admin\PostsController@search');
+Route::get('/search','Guest\GuestsController@search');
 
 Route::get('/', 'Guest\GuestsController@index');                                        //index for guests
 Route::get('/post-{id}', 'Guest\GuestsController@show');                                //view a particular post

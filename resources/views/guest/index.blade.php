@@ -16,11 +16,16 @@
             padding: 0px 50px 0px 50px;
             box-shadow: 1px 1px 4px 1px rgba(8,8,8,0.08);
             border: 1px solid #eee;
-            margin: 50px 0 50px 0;
+            margin: 50px 0 20px 0;
             transition: .5s;
         }
         input[name="search"]:focus{
             border: 1px solid #4CAF50;
+            /* margin-bottom: 50px; */
+        }
+        #btn-search{
+            display: block;
+            margin: auto;
         }
         .blog-posts{
             margin: 50px 0 100px 0;
@@ -70,14 +75,14 @@
             }
         }
     </style>
-{{-- 
-    <form action="/" method="GET">
-        @csrf --}}
-        <input id="search" name="search" type="text" placeholder="Search for posts..." />
-        {{-- <button class="btn btn-secondary d-none" type="submit">Search</button>
-    </form> --}}
 
-    <div class="blog-posts grid" data-masonry='{ "itemSelector": ".grid-item"}'>
+    <form action="/search" method="GET">
+        @csrf
+        <input id="search" name="search" type="text" placeholder="Search for posts..." />
+        <button id="btn-search" class="btn btn-secondary" type="submit">Search</button>
+    </form>
+
+     <div class="blog-posts grid">
 
         @forelse($posts as $post)
 
@@ -103,41 +108,17 @@
 
         @empty
 
-        <p>This blog doesn't have any posts yet.</p>
+        <p class="text-center">No posts have been found.</p>
 
         @endforelse
 
-    </div>
+     </div>
 
     <script type="text/javascript">
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+        var elem = document.querySelector('.grid');
+        var masonry = new Masonry( elem, {
+            itemSelector: '.grid-item'
         });
-    
-        $('#search').on('keyup',function(){
-
-            let value = $(this).val();
-            
-            console.log(value);
-
-            $.ajax({
-                type : 'GET',
-                url : '/search',
-                data: {'search': value},
-                success: function(data)
-                {
-                    $.each(data, function(index) {
-                        $('.item').html('da');
-                        $('.item').html(JSON.stringify(data[index]));
-                    });
-                }
-
-            });
-        })
-
     </script>        
 
 @endsection

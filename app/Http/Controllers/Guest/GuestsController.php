@@ -18,4 +18,16 @@ class GuestsController extends Controller
         $post = Post::find($id);
         return view('guest.show', compact('post'));
     }
+
+    public function search(Request $request)
+    {
+        $posts = Post::where('visible', 'LIKE', 'true')
+                    ->where(function ($query) use ($request) {
+                            $query->where('title', 'LIKE', '%'.$request->search."%")
+                                    ->orWhere('content', 'LIKE', '%'.$request->search."%");
+                    })
+                    ->get();
+
+        return view('guest.index', compact('posts'));
+    }
 }
