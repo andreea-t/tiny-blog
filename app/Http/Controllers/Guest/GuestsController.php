@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\User;
+use App\Invitation;
+use App\Mail\InviteCreated;
 use Illuminate\Http\Request;
 
 class GuestsController extends Controller
@@ -29,5 +32,17 @@ class GuestsController extends Controller
                     ->get();
 
         return view('guest.index', compact('posts'));
+    }
+    public function accept($token){
+
+        if (!$invite = Invitation::where('token', $token)->first()) {
+            abort(404);
+        }
+
+        // User::create(['email' => $invite->email]);
+
+        // $invite->delete();
+        $email = $invite->email;
+        return view('auth.register', compact('email'));
     }
 }

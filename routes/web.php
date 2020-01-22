@@ -11,7 +11,11 @@
 |
 */
 
-Auth::routes(['verify' => true]);
+Auth::routes();
+
+Route::get('/admin/user/create', 'Admin\UserController@create');
+Route::post('/admin/user/create', 'Admin\UserController@store');
+Route::get('/accept/{token}', 'Guest\GuestsController@accept')->name('accept');
 
 Route::get('/search','Guest\GuestsController@search');
 
