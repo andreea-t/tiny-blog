@@ -43,6 +43,12 @@ class GuestsController extends Controller
 
         // $invite->delete();
         $email = $invite->email;
-        return view('auth.register', compact('email'));
+        if($email->empty())
+        {
+            return abort(404);
+        }
+        else{
+            return view('auth.register', compact('email'));
+        }
     }
 }
