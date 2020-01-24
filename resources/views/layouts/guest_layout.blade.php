@@ -32,6 +32,15 @@
                 justify-content: flex-end;
                 align-items: center;
             }
+            .overlay>h5{
+                position: absolute;
+                right: 0;
+                top: 0;
+                padding: 40px;
+            }
+            .overlay>h5>a{
+                color: #000;
+            }
             .effect-container{
                 background: #111;
                 width: 320px;
@@ -119,6 +128,7 @@
         <header>
             <img src="{{ asset('/images/tiny-blog.jpg') }}" alt="Tinyblog cover photo" />
             <div class="overlay">
+                <h5><a href={{route('login')}}>Login</a></h5>
                 <div>
                     <div class="effect-container">
                         <p>A tiny blog</p>
